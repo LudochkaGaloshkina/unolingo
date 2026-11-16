@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.valek.controller.RegisterController"
+            prefWidth="900" prefHeight="720"
+            style="-fx-background-color: #f3f7ff;">
+
+    <left>
+        <VBox alignment="CENTER" spacing="20"
+              prefWidth="280"
+              style="-fx-background-color: linear-gradient(to bottom, #e2eeff, #c9dcff);">
+
+            <padding>
+                <Insets top="30" bottom="30" left="22" right="22"/>
+            </padding>
+
+            <Label text="📘" style="-fx-font-size: 58px;"/>
+
+            <Label text="English Learning Platform"
+                   wrapText="true"
+                   alignment="CENTER"
+                   maxWidth="240"
+                   style="-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+            <Label text="Твой путь к свободному английскому начинается здесь!"
+                   wrapText="true"
+                   alignment="CENTER"
+                   maxWidth="220"
+                   style="-fx-font-size: 15px; -fx-text-fill: #5473a8;"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Label text="🇬🇧  Practice. Learn. Improve."
+                   wrapText="true"
+                   alignment="CENTER"
+                   style="-fx-font-size: 14px; -fx-text-fill: #244b91;"/>
+
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+
+            <content>
+                <VBox alignment="CENTER" spacing="20">
+
+                    <padding>
+                        <Insets top="30" bottom="30" left="40" right="40"/>
+                    </padding>
+
+                    <VBox spacing="14" maxWidth="430"
+                          style="-fx-background-color: white; -fx-background-radius: 18; -fx-effect: dropshadow(gaussian, #cbd8eb, 18, 0.15, 0, 5);">
+
+                        <padding>
+                            <Insets top="30" bottom="30" left="32" right="32"/>
+                        </padding>
+
+                        <Label text="Регистрация"
+                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+                        <Label text="Создайте аккаунт и начните обучение"
+                               wrapText="true"
+                               style="-fx-font-size: 14px; -fx-text-fill: #7185a8;"/>
+
+                        <Region minHeight="3"/>
+
+                        <Label text="Имя пользователя"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <TextField fx:id="usernameField"
+                                   promptText="Например, Alex"
+                                   prefHeight="42"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #d6e1f2; -fx-font-size: 14px;"/>
+
+                        <Label text="Электронная почта"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <TextField fx:id="emailField"
+                                   promptText="example@mail.com"
+                                   prefHeight="42"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #d6e1f2; -fx-font-size: 14px;"/>
+
+                        <Label text="Пароль"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <PasswordField fx:id="passwordField"
+                                       promptText="Не менее 8 символов"
+                                       prefHeight="42"
+                                       style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #d6e1f2; -fx-font-size: 14px;"/>
+
+                        <Label text="Подтвердите пароль"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <PasswordField fx:id="confirmPasswordField"
+                                       promptText="Повторите пароль"
+                                       prefHeight="42"
+                                       style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #d6e1f2; -fx-font-size: 14px;"/>
+
+                        <Label text="Уровень английского"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <ComboBox fx:id="levelComboBox"
+                                  promptText="Выберите уровень"
+                                  maxWidth="Infinity"
+                                  prefHeight="42"/>
+
+                        <Label text="Роль"
+                               style="-fx-font-weight: bold; -fx-text-fill: #35517d;"/>
+
+                        <Label text="Пользователь"
+                               prefHeight="36"
+                               style="-fx-text-fill: #35517d; -fx-background-color: #eef4ff; -fx-background-radius: 8;"
+                               maxWidth="Infinity">
+                            <padding>
+                                <Insets left="12" right="12"/>
+                            </padding>
+                        </Label>
+
+                        <CheckBox fx:id="termsCheckBox"
+                                  text="Я согласен с условиями использования"
+                                  wrapText="true"
+                                  style="-fx-text-fill: #5473a8;"/>
+
+                        <Label fx:id="messageLabel"
+                               text=""
+                               wrapText="true"
+                               style="-fx-text-fill: #d64545;"/>
+
+                        <Button text="Зарегистрироваться"
+                                onAction="#handleRegister"
+                                maxWidth="Infinity"
+                                prefHeight="46"
+                                style="-fx-background-color: #3478f6; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 9; -fx-cursor: hand;"/>
+
+                        <HBox alignment="CENTER" spacing="5">
+                            <Label text="Уже есть аккаунт?"
+                                   style="-fx-text-fill: #7185a8;"/>
+
+                            <Hyperlink text="Войти"
+                                       onAction="#handleOpenLogin"
+                                       style="-fx-text-fill: #2875f5; -fx-font-weight: bold;"/>
+                        </HBox>
+
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
