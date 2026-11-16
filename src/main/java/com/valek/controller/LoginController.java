@@ -3,6 +3,7 @@ package com.valek.controller;
 
 import com.valek.model.User;
 import com.valek.service.AuthService;
+import com.valek.service.mail.EmailService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,6 +27,7 @@ public class LoginController {
 
     private final AuthService authService;
     private final ConfigurableApplicationContext context;
+    private final EmailService emailService;
 
     @FXML
     private TextField emailField;
@@ -81,9 +83,7 @@ public class LoginController {
 
     @FXML
     private void handleForgotPassword() {
-        messageLabel.setText(
-                "Для восстановления пароля обратитесь к администратору."
-        );
+        openWindow("/fxml/forgot-password.fxml", emailField);
     }
 
     @FXML
@@ -100,7 +100,6 @@ public class LoginController {
                     getClass().getResource(fxmlPath)
             );
 
-            // Передаём Spring управление созданием контроллера
             loader.setControllerFactory(context::getBean);
 
             Parent root = loader.load();

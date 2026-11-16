@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                OR LOWER(u.username) = LOWER(:login)
             """)
     Optional<User> findByLogin(@Param("login") String login);
+
+    Optional<User> findByEmailIgnoreCase(String email);
 }
