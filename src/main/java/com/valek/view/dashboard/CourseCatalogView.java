@@ -1,7 +1,7 @@
 package com.valek.view.dashboard;
 
-import com.valek.model.Course;
-import com.valek.service.CourseService;
+import com.valek.model.learningmodels.Course;
+import com.valek.service.learningservices.CourseService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,13 +14,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Component
 @RequiredArgsConstructor
 public class CourseCatalogView {
     private final CourseService courseService;
 
-    private VBox createCourseCard(Course course) {
+    private VBox createCourseCard(Course course, Consumer<Course> onCourseSelected) {
 
         VBox card = new VBox(12);
         card.setPrefWidth(310);
@@ -45,6 +46,7 @@ public class CourseCatalogView {
         Button startButton = new Button("Начать обучение →");
         startButton.setMaxWidth(Double.MAX_VALUE);
         startButton.getStyleClass().add("course-button");
+        startButton.setOnAction(event -> onCourseSelected.accept(course));
 
         card.getChildren().addAll(
                 level,
@@ -56,7 +58,7 @@ public class CourseCatalogView {
         return card;
     }
 
-    public VBox create() {
+    public VBox create(Consumer<Course> onCourseSelected) {
 
         VBox root = new VBox(15);
 
@@ -84,7 +86,7 @@ public class CourseCatalogView {
         List<Course> courses = courseService.getPublishedCourses();
 
         for (Course course : courses) {
-            VBox card = createCourseCard(course);
+            VBox card = createCourseCard(course, onCourseSelected);
             coursesContainer.getChildren().add(card);
         }
 

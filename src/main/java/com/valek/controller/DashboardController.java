@@ -1,7 +1,9 @@
 package com.valek.controller;
 
 import com.valek.model.User;
+import com.valek.model.learningmodels.Course;
 import com.valek.view.dashboard.CourseCatalogView;
+import com.valek.view.dashboard.CourseDetailsView;
 import com.valek.view.dashboard.HomeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +19,7 @@ public class DashboardController {
     private User user;
     private final HomeView homeView;
     private final CourseCatalogView courseCatalogView;
+    private final CourseDetailsView courseDetailsView;
 
     @FXML
     private Button homeButton;
@@ -73,11 +76,19 @@ public class DashboardController {
         showHome();
     }
 
-    private void showLearning(){
-        contentBox.getChildren().setAll(courseCatalogView.create());
+    private void showLearning() {
+        contentBox.getChildren().setAll(
+                courseCatalogView.create(this::showCourseDetails)
+        );
     }
 
     private void showHome() {
         contentBox.getChildren().setAll(homeView.create(user));
+    }
+
+    private void showCourseDetails(Course course) {
+        contentBox.getChildren().setAll(
+                courseDetailsView.create(course)
+        );
     }
 }

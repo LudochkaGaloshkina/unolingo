@@ -1,6 +1,6 @@
-package com.valek.repository;
+package com.valek.repository.learningreps;
 
-import com.valek.model.Course;
+import com.valek.model.learningmodels.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
