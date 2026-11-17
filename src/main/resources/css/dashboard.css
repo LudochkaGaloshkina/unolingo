@@ -1,0 +1,30 @@
+/* Обычная кнопка меню */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #34547f;
+    -fx-font-size: 16px;
+    -fx-font-weight: normal;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 13px 16px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-pref-width: 190px;
+}
+
+/* Наведение мыши */
+.nav-button:hover {
+    -fx-background-color: #d2e3fc;
+    -fx-text-fill: #163779;
+}
+
+/* Активный раздел */
+.nav-button.active {
+    -fx-background-color: #3478f6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Наведение на активный раздел */
+.nav-button.active:hover {
+    -fx-background-color: #2867df;
+}

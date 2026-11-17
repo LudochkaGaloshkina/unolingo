@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.valek.controller.DashboardController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f3f7ff;"
+            stylesheets="@../css/dashboard.css">
+
+    <!-- Боковая панель -->
+    <left>
+        <VBox spacing="30"
+              prefWidth="230"
+              style="-fx-background-color: linear-gradient(to bottom, #e2eeff, #c9dcff);">
+
+            <padding>
+                <Insets top="35" right="20" bottom="25" left="20"/>
+            </padding>
+
+            <Label text="Unolingo"
+                   style="-fx-font-size: 27px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+
+
+            <VBox spacing="10">
+
+                <Button fx:id="homeButton"
+                        text="Главная"
+                        onAction="#handleHome"
+                        maxWidth="Infinity"
+                        styleClass="nav-button, active"/>
+
+                <Button fx:id="learningButton"
+                        text="Обучение"
+                        onAction="#handleLearning"
+                        maxWidth="Infinity"
+                        styleClass="nav-button"/>
+
+                <Button fx:id="exercisesButton"
+                        text="Упражнения"
+                        onAction="#handleExercises"
+                        maxWidth="Infinity"
+                        styleClass="nav-button"/>
+
+                <Button fx:id="progressButton"
+                        text="Мой прогресс"
+                        onAction="#handleProgress"
+                        maxWidth="Infinity"
+                        styleClass="nav-button"/>
+
+            </VBox>
+
+
+        </VBox>
+    </left>
+
+    <!-- Основная область -->
+    <center>
+        <VBox spacing="25">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <Label fx:id="welcomeLabel"
+                   text="Добро пожаловать в Unolingo!"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+            <Label text="Продолжайте изучать английский язык и достигайте новых целей."
+                   style="-fx-font-size: 15px; -fx-text-fill: #64748b;"/>
+
+            <Label fx:id="sectionLabel"
+                   text="Главная"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+            <HBox spacing="20">
+
+                <VBox spacing="12" prefWidth="220"
+                      style="-fx-background-color: white; -fx-background-radius: 15;">
+
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Ваш уровень"
+                           style="-fx-font-size: 15px; -fx-text-fill: #64748b;"/>
+
+                    <Label fx:id="levelLabel"
+                           style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+                </VBox>
+
+                <VBox spacing="12" prefWidth="220"
+                      style="-fx-background-color: white; -fx-background-radius: 15;">
+
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Пройдено уроков"
+                           style="-fx-font-size: 15px; -fx-text-fill: #64748b;"/>
+
+                    <Label text="0"
+                           style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+                </VBox>
+
+            </HBox>
+
+            <VBox spacing="12"
+                  style="-fx-background-color: white; -fx-background-radius: 15;">
+
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+
+                <Label text="Продолжить обучение"
+                       style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #163779;"/>
+
+                <Label text="Здесь будут отображаться доступные уроки."
+                       style="-fx-font-size: 14px; -fx-text-fill: #64748b;"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

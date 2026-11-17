@@ -1,4 +1,4 @@
-package com.valek.controller;
+package com.valek.controller.AuthControllers;
 
 import com.valek.service.mail.PasswordResetService;
 import javafx.fxml.FXML;
@@ -43,7 +43,7 @@ public class ForgotPasswordController {
             passwordResetService.sendResetCode(email);
 
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/fxml/reset-password.fxml")
+                    getClass().getResource("/fxml/AuthPages/reset-password.fxml")
             );
 
             loader.setControllerFactory(context::getBean);
@@ -71,7 +71,7 @@ public class ForgotPasswordController {
 
     @FXML
     private void handleBackToLogin() {
-        openWindow("/fxml/login.fxml", emailField);
+        openWindow("/fxml/AuthPages/login.fxml", emailField);
     }
 
     private void openWindow(String fxmlPath, Node node) {

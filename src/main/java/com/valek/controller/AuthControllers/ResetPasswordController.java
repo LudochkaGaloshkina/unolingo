@@ -1,5 +1,5 @@
 
-package com.valek.controller;
+package com.valek.controller.AuthControllers;
 
 import com.valek.service.mail.PasswordResetService;
 import javafx.fxml.FXML;
@@ -78,7 +78,7 @@ public class ResetPasswordController {
 
     @FXML
     private void handleBackToLogin() {
-        openWindow("/fxml/login.fxml", codeField);
+        openWindow("/fxml/AuthPages/login.fxml", codeField);
     }
 
     private void openWindow(String fxmlPath, Node node) {

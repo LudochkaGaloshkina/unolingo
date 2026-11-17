@@ -1,6 +1,6 @@
+package com.valek.controller.AuthControllers;
 
-package com.valek.controller;
-
+import com.valek.controller.DashboardController;
 import com.valek.model.User;
 import com.valek.service.AuthService;
 import com.valek.service.mail.EmailService;
@@ -60,12 +60,21 @@ public class LoginController {
                 return;
             }
 
-            messageLabel.setStyle("-fx-text-fill: #218838;");
-            messageLabel.setText(
-                    "Добро пожаловать, " + user.getUsername() + "!"
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/dashboard.fxml")
             );
 
-            // Здесь позже откроем главный экран приложения.
+            loader.setControllerFactory(context::getBean);
+
+            Parent root = loader.load();
+
+            DashboardController controller = loader.getController();
+            controller.setUser(user);
+
+            Stage stage = (Stage) emailField.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Unolingo");
+            stage.centerOnScreen();
 
         } catch (DataAccessException e) {
             messageLabel.setStyle("-fx-text-fill: #d64545;");
@@ -73,17 +82,21 @@ public class LoginController {
                     "Не удалось выполнить вход. Проверьте подключение к БД."
             );
             e.printStackTrace();
+
+        } catch (IOException e) {
+            messageLabel.setText("Не удалось открыть главный экран.");
+            e.printStackTrace();
         }
     }
 
     @FXML
     private void handleOpenRegister() {
-        openWindow("/fxml/register.fxml", emailField);
+        openWindow("/fxml/AuthPages/register.fxml", emailField);
     }
 
     @FXML
     private void handleForgotPassword() {
-        openWindow("/fxml/forgot-password.fxml", emailField);
+        openWindow("/fxml/AuthPages/forgot-password.fxml", emailField);
     }
 
     @FXML

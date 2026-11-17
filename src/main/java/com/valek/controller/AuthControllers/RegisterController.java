@@ -1,5 +1,5 @@
 
-package com.valek.controller;
+package com.valek.controller.AuthControllers;
 
 import com.valek.service.AuthService;
 import javafx.fxml.FXML;
@@ -111,7 +111,7 @@ public class RegisterController {
 
     @FXML
     private void handleOpenLogin() {
-        openWindow("/fxml/login.fxml", usernameField);
+        openWindow("/fxml/AuthPages/login.fxml", usernameField);
     }
 
     private void showError(String message) {

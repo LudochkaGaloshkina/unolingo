@@ -1,4 +1,3 @@
-
 package com.valek;
 
 import javafx.application.Application;
@@ -23,7 +22,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/login.fxml")
+                getClass().getResource("/fxml/AuthPages/login.fxml")
         );
 
         loader.setControllerFactory(context::getBean);
