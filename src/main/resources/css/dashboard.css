@@ -28,3 +28,60 @@
 .nav-button.active:hover {
     -fx-background-color: #2867df;
 }
+/* Карточка курса */
+.course-card {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f0f6ff);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: #d7e6ff;
+    -fx-border-width: 1.5;
+    -fx-pref-width: 310px;
+    -fx-min-height: 190px;
+    -fx-max-height: 190px;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.08), 12, 0, 0, 4);
+}
+
+.course-card:hover {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #e5efff);
+    -fx-border-color: #7ba9f5;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.20), 16, 0, 0, 5);
+}
+
+/* Уровень */
+.course-level {
+    -fx-background-color: #dbeafe;
+    -fx-background-radius: 20;
+    -fx-padding: 7 13;
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Название */
+.course-title {
+    -fx-font-size: 23px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #173b7a;
+}
+
+/* Описание */
+.course-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748b;
+    -fx-line-spacing: 3px;
+}
+
+/* Кнопка */
+.course-button {
+    -fx-background-color: linear-gradient(to right, #3478ed, #5b9bff);
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 11 15;
+    -fx-cursor: hand;
+}
+
+.course-button:hover {
+    -fx-background-color: #1d4ed8;
+}

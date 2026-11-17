@@ -1,24 +1,22 @@
 package com.valek.controller;
 
 import com.valek.model.User;
+import com.valek.view.dashboard.CourseCatalogView;
+import com.valek.view.dashboard.HomeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
+
 @Controller
+@RequiredArgsConstructor
 public class DashboardController {
 
     private User user;
-
-    @FXML
-    private Label welcomeLabel;
-
-    @FXML
-    private Label levelLabel;
-
-    @FXML
-    private Label sectionLabel;
+    private final HomeView homeView;
+    private final CourseCatalogView courseCatalogView;
 
     @FXML
     private Button homeButton;
@@ -30,31 +28,35 @@ public class DashboardController {
     private Button exercisesButton;
 
     @FXML
+    private VBox contentBox;
+
+    @FXML
     private Button progressButton;
 
     @FXML
     private void handleHome() {
-        sectionLabel.setText("Главная");
         setActiveButton(homeButton);
+
+        showHome();
     }
 
     @FXML
     private void handleLearning() {
-        sectionLabel.setText("Обучение");
         setActiveButton(learningButton);
+
+        showLearning();
     }
 
     @FXML
     private void handleExercises() {
-        sectionLabel.setText("Упражнения");
         setActiveButton(exercisesButton);
     }
 
     @FXML
     private void handleProgress() {
-        sectionLabel.setText("Мой прогресс");
         setActiveButton(progressButton);
     }
+
 
     private void setActiveButton(Button button) {
 
@@ -68,11 +70,14 @@ public class DashboardController {
 
     public void setUser(User user) {
         this.user = user;
+        showHome();
+    }
 
-        welcomeLabel.setText(
-                "Добро пожаловать, " + user.getUsername() + "!"
-        );
+    private void showLearning(){
+        contentBox.getChildren().setAll(courseCatalogView.create());
+    }
 
-        levelLabel.setText(user.getLevel());
+    private void showHome() {
+        contentBox.getChildren().setAll(homeView.create(user));
     }
 }
