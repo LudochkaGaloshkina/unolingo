@@ -29,10 +29,10 @@ public class Main extends Application {
 
         Scene scene = new Scene(loader.load());
 
-        stage.setTitle("English Learning Platform");
+        stage.setTitle("Unolingo");
         stage.setScene(scene);
-        stage.setMinWidth(750);
-        stage.setMinHeight(550);
+
+        stage.setMaximized(true);
         stage.show();
     }
 

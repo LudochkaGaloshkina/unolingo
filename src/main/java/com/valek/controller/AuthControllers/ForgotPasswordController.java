@@ -54,9 +54,17 @@ public class ForgotPasswordController {
             controller.setEmail(email);
 
             Stage stage = (Stage) emailField.getScene().getWindow();
+
+            boolean wasMaximized = stage.isMaximized();
+
             stage.setScene(new Scene(root));
-            stage.setTitle("English Learning Platform");
-            stage.centerOnScreen();
+            stage.setTitle("Unolingo");
+
+            if (wasMaximized) {
+                stage.setMaximized(false);
+            }
+
+            stage.setMaximized(true);
 
         } catch (IOException e) {
             messageLabel.setText("Не удалось открыть экран.");
@@ -86,9 +94,17 @@ public class ForgotPasswordController {
             Parent root = loader.load();
 
             Stage stage = (Stage) node.getScene().getWindow();
+
+            boolean wasMaximized = stage.isMaximized();
+
             stage.setScene(new Scene(root));
-            stage.setTitle("English Learning Platform");
-            stage.centerOnScreen();
+            stage.setTitle("Unolingo");
+
+            if (wasMaximized) {
+                stage.setMaximized(false);
+            }
+
+            stage.setMaximized(true);
 
         } catch (IOException e) {
             e.printStackTrace();

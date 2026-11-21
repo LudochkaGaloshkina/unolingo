@@ -1,0 +1,104 @@
+
+/* Общий фон */
+.course-details {
+    -fx-background-color: #F8FAFC;
+}
+
+/* Кнопка возврата */
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2563EB;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 12 8 0;
+}
+
+.back-button:hover {
+    -fx-text-fill: #1D4ED8;
+}
+
+/* Заголовок курса */
+.course-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+}
+
+.course-description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748B;
+}
+
+/* Карточка раздела */
+.unit-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14px;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-padding: 0;
+}
+
+.unit-pane > .title {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14px;
+    -fx-padding: 15px;
+    -fx-border-color: transparent;
+}
+
+.unit-pane:expanded > .title {
+    -fx-background-color: #EFF6FF;
+    -fx-background-radius: 14px 14px 0 0;
+    -fx-border-color: transparent transparent #DBEAFE transparent;
+}
+
+.unit-pane > .title > .text {
+    -fx-fill: #1E293B;
+}
+
+/* Стрелка раздела */
+.unit-pane > .title > .arrow-button > .arrow {
+    -fx-background-color: #2563EB;
+}
+
+/* Содержимое раздела */
+.unit-pane > .content {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 0 0 14px 14px;
+    -fx-border-color: transparent;
+    -fx-padding: 12px;
+}
+
+/* Строки уроков */
+.lesson-row {
+    -fx-background-color: #F8FAFC;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-padding: 13px;
+    -fx-cursor: hand;
+}
+
+.lesson-row:hover {
+    -fx-background-color: #EFF6FF;
+}
+
+/* Номер урока */
+.lesson-number {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2563EB;
+}
+
+/* Название урока */
+.lesson-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #334155;
+}
+
+/* Количество уроков */
+.lesson-count {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}

@@ -88,7 +88,7 @@ public class DashboardController {
 
     private void showCourseDetails(Course course) {
         contentBox.getChildren().setAll(
-                courseDetailsView.create(course)
+                courseDetailsView.create(course, this::showLearning)
         );
     }
 }

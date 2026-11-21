@@ -93,9 +93,17 @@ public class ResetPasswordController {
             Parent root = loader.load();
 
             Stage stage = (Stage) node.getScene().getWindow();
+
+            boolean wasMaximized = stage.isMaximized();
+
             stage.setScene(new Scene(root));
-            stage.setTitle("English Learning Platform");
-            stage.centerOnScreen();
+            stage.setTitle("Unolingo");
+
+            if (wasMaximized) {
+                stage.setMaximized(false);
+            }
+
+            stage.setMaximized(true);
 
         } catch (IOException e) {
             e.printStackTrace();
