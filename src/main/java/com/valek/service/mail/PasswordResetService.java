@@ -20,6 +20,7 @@ public class PasswordResetService {
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository tokenRepository;
     private final EmailService emailService;
+    static final int CodeExpiredTime = 10;
 
     private final SecureRandom random = new SecureRandom();
 
@@ -44,7 +45,7 @@ public class PasswordResetService {
 
         token.setEmail(user.getEmail());
         token.setCode(code);
-        token.setExpiresAt(LocalDateTime.now().plusMinutes(10));
+        token.setExpiresAt(LocalDateTime.now().plusMinutes(CodeExpiredTime));
 
         tokenRepository.deleteByEmail(user.getEmail());
         tokenRepository.save(token);
@@ -53,7 +54,7 @@ public class PasswordResetService {
                 user.getEmail(),
                 "Восстановление пароля Unolingo",
                 "Ваш код восстановления пароля: " + code
-                        + "\n\nКод действителен в течение 10 минут."
+                        + "\n\nКод действителен в течение " + CodeExpiredTime + " минут."
         );
     }
 

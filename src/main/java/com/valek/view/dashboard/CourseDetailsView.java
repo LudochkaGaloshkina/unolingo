@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Component
 @RequiredArgsConstructor
@@ -27,19 +28,20 @@ public class CourseDetailsView {
     private final CourseUnitService courseUnitService;
     private final LessonService lessonService;
 
-    public VBox create(Course course, Runnable onBack) {
+    public VBox create(
+            Course course,
+            Runnable onBack,
+            Consumer<Lesson> onLessonSelected
+    ) {
 
         // Основной контейнер
         VBox root = new VBox(22);
         root.setPadding(new Insets(25));
         root.getStyleClass().add("course-details");
 
-        // Подключение CSS
-        root.getStylesheets().add(
-                getClass()
-                        .getResource("/css/course-details.css")
-                        .toExternalForm()
-        );
+        var css = getClass().getResource("/css/course-details.css");
+
+        root.getStylesheets().add(css.toExternalForm());
 
         // Кнопка возврата к каталогу курсов
         Button backButton = new Button("←  Все курсы");
@@ -105,6 +107,11 @@ public class CourseDetailsView {
                 lessonTitle.getStyleClass().add("lesson-title");
 
                 lessonRow.getChildren().addAll(number, lessonTitle);
+
+                // Переход к выбранному уроку
+                lessonRow.setOnMouseClicked(
+                        event -> onLessonSelected.accept(lesson)
+                );
 
                 lessonList.getChildren().add(lessonRow);
             }
