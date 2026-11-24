@@ -3,11 +3,13 @@ package com.valek.controller;
 
 import com.valek.dto.learningdto.ExerciseDto;
 import com.valek.model.User;
+import com.valek.model.attempts.LessonAttempt;
 import com.valek.model.learningmodels.Course;
 
 import com.valek.model.learningmodels.Lesson;
 
 import com.valek.service.learningservices.ExerciseService;
+import com.valek.service.progress.LessonProgressService;
 import com.valek.view.dashboard.*;
 
 import javafx.fxml.FXML;
@@ -35,6 +37,8 @@ public class DashboardController {
     private int currentExerciseIndex;
     private Lesson currentLesson;
     private Course currentCourse;
+    private final LessonProgressService lessonProgressService;
+    private LessonAttempt currentLessonAttempt;
 
     @FXML
     private Button homeButton;
@@ -119,13 +123,34 @@ public class DashboardController {
         ExerciseDto exercise = currentExercises.get(currentExerciseIndex);
 
         contentBox.getChildren().setAll(exerciseView.create(exercise, () -> showLesson(currentLesson),
-                        answer -> exerciseService.checkAnswer(exercise.id(), answer), this::nextExercise));
+                answer -> {
+                    boolean correct = exerciseService.checkAnswer(exercise.id(), answer);
+
+                    lessonProgressService.recordExerciseAttempt(
+                            currentLessonAttempt,
+                            exercise.id(),
+                            answer,
+                            correct
+                    );
+
+                    return correct;
+                }, this::nextExercise));
     }
 
     public void startLesson() {
         currentExercises = exerciseService.getExercisesByLesson(currentLesson.getId());
 
+        if (currentExercises.isEmpty()) {
+            return;
+        }
+
         currentExerciseIndex = 0;
+
+        currentLessonAttempt = lessonProgressService.startLessonAttempt(
+                user,
+                currentLesson,
+                currentExercises.size()
+        );
 
         showExercise();
     }
@@ -136,6 +161,10 @@ public class DashboardController {
         if (currentExerciseIndex < currentExercises.size()) {
             showExercise();
         } else {
+            lessonProgressService.completeLesson(currentLessonAttempt);
+
+            currentLessonAttempt = null;
+
             showCourseDetails(currentCourse);
         }
     }

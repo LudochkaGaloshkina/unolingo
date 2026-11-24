@@ -6,15 +6,14 @@ import com.valek.dto.learningdto.ExerciseOptionDto;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -62,9 +61,14 @@ public class ExerciseView {
         VBox questionHeader = createQuestionHeader(exercise);
 
         AnswerControls answerControls = createAnswerBox(exercise);
+        answerControls.getBox().setMaxWidth(Double.MAX_VALUE);
 
         Label resultLabel = new Label();
+
         resultLabel.setWrapText(true);
+        resultLabel.setPrefWidth(570);
+        resultLabel.setMinHeight(Region.USE_PREF_SIZE);
+        resultLabel.setMaxHeight(Double.MAX_VALUE);
         resultLabel.setStyle(
                 "-fx-font-size: 14px;" +
                         "-fx-font-weight: bold;"
@@ -124,9 +128,29 @@ public class ExerciseView {
                 nextButton
         );
 
+
+        VBox scrollContent = new VBox(exerciseCard);
+        scrollContent.setAlignment(Pos.TOP_CENTER);
+        scrollContent.setPadding(new Insets(5));
+
+
+        ScrollPane scrollPane = new ScrollPane(scrollContent);
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setPannable(true);
+
+        scrollPane.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background: transparent;"
+        );
+
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
         root.getChildren().addAll(
                 header,
-                exerciseCard
+                scrollPane
         );
 
         return root;
@@ -151,6 +175,7 @@ public class ExerciseView {
     private VBox createQuestionHeader(ExerciseDto exercise) {
 
         VBox header = new VBox(12);
+        header.setMaxWidth(Double.MAX_VALUE);
 
         Label typeLabel = new Label(getTypeName(exercise.type()));
         typeLabel.setStyle(
@@ -162,13 +187,16 @@ public class ExerciseView {
                         "-fx-padding: 7 13;"
         );
 
-        Label questionLabel = new Label(exercise.question());
-        questionLabel.setWrapText(true);
-        questionLabel.setStyle(
+        Text questionText = new Text(exercise.question());
+        questionText.setStyle(
                 "-fx-font-size: 23px;" +
                         "-fx-font-weight: bold;" +
-                        "-fx-text-fill: #1E293B;"
+                        "-fx-fill: #1E293B;"
         );
+
+        TextFlow questionFlow = new TextFlow(questionText);
+        questionFlow.setPrefWidth(570);
+        questionFlow.setMaxWidth(570);
 
         Label pointsLabel = new Label(
                 "★  " + exercise.points() + " баллов"
@@ -180,7 +208,7 @@ public class ExerciseView {
 
         header.getChildren().addAll(
                 typeLabel,
-                questionLabel,
+                questionFlow,
                 pointsLabel
         );
 
@@ -280,8 +308,7 @@ public class ExerciseView {
 
         for (ExerciseOptionDto option : exercise.options()) {
 
-            RadioButton optionButton =
-                    new RadioButton(option.optionText());
+            RadioButton optionButton = new RadioButton(option.optionText());
 
             optionButton.setUserData(option.id());
             optionButton.setToggleGroup(answerGroup);
@@ -289,6 +316,7 @@ public class ExerciseView {
 
             optionButton.setStyle(
                     "-fx-font-size: 15px;" +
+                            "-fx-text-fill: #1E293B;" +
                             "-fx-padding: 12;" +
                             "-fx-cursor: hand;" +
                             "-fx-background-color: #F8FAFC;" +
@@ -445,7 +473,8 @@ public class ExerciseView {
             }
 
             resultLabel.setText(
-                    "✗  Неправильно.\n" + explanation
+                    "✗ Неправильно.\n\n" +
+                            "Объяснение: " + explanation
             );
 
             resultLabel.setStyle(
