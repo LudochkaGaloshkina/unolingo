@@ -8,7 +8,7 @@ import com.valek.model.attempts.UserLessonProgress;
 import com.valek.model.learningmodels.Exercise;
 import com.valek.model.learningmodels.ExerciseOption;
 import com.valek.model.learningmodels.Lesson;
-import com.valek.model.learningmodels.UserDailyStats;
+import com.valek.model.UserDailyStats;
 import com.valek.repository.UserDailyStatsRepository;
 import com.valek.repository.attemptreps.ExerciseAttemptRepository;
 import com.valek.repository.attemptreps.LessonAttemptRepository;

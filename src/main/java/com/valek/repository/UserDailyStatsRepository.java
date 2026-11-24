@@ -1,6 +1,6 @@
 package com.valek.repository;
 
-import com.valek.model.learningmodels.UserDailyStats;
+import com.valek.model.UserDailyStats;
 import com.valek.model.UserDailyStatsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
