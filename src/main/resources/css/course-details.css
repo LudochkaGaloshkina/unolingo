@@ -1,104 +1,257 @@
 
-/* Общий фон */
+/* =========================================
+   ОСНОВНЫЕ ЦВЕТА И ФОН
+   ========================================= */
+
 .course-details {
-    -fx-background-color: #F8FAFC;
+    -fx-background-color: #F0F8FF;
 }
 
-/* Кнопка возврата */
-.back-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: #2563EB;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-    -fx-padding: 8 12 8 0;
-}
+/* =========================================
+   ЗАГОЛОВКИ
+   ========================================= */
 
-.back-button:hover {
-    -fx-text-fill: #1D4ED8;
-}
-
-/* Заголовок курса */
 .course-title {
-    -fx-font-size: 28px;
+    -fx-font-size: 27px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1E293B;
+    -fx-text-fill: #163779;
 }
 
 .course-description {
     -fx-font-size: 14px;
-    -fx-text-fill: #64748B;
+    -fx-text-fill: #647F9F;
+    -fx-line-spacing: 3px;
 }
 
-/* Карточка раздела */
+/* =========================================
+   КНОПКА НАЗАД
+   ========================================= */
+
+.back-button {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1976D2;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-padding: 9 16 9 16;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-background-color: #BBDEFB;
+    -fx-text-fill: #0D47A1;
+}
+
+/* =========================================
+   КАРТОЧКИ КУРСОВ И УПРАЖНЕНИЙ
+   ========================================= */
+
+.course-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 20px;
+
+    -fx-border-color: #D6EAFB;
+    -fx-border-radius: 20px;
+    -fx-border-width: 1px 1px 4px 1px;
+
+    -fx-padding: 20px;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(33, 150, 243, 0.10),
+        12,
+        0,
+        0,
+        4
+    );
+}
+
+.course-card:hover {
+    -fx-background-color: #F8FCFF;
+    -fx-border-color: #90CAF9;
+    -fx-translate-y: -3px;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(33, 150, 243, 0.20),
+        16,
+        0,
+        0,
+        5
+    );
+}
+
+/* Уровень курса */
+
+.course-level {
+    -fx-background-color: #E3F2FD;
+    -fx-background-radius: 8px;
+
+    -fx-padding: 6px 10px;
+
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976D2;
+}
+
+/* Название курса или урока */
+
+.course-title {
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #163779;
+}
+
+/* Описание */
+
+.course-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #647F9F;
+    -fx-line-spacing: 2px;
+}
+
+/* Кнопка карточки */
+
+.course-button {
+    -fx-background-color: #2196F3;
+    -fx-background-radius: 12px;
+
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+
+    -fx-padding: 12px 16px;
+    -fx-cursor: hand;
+
+    -fx-border-color: #1976D2;
+    -fx-border-width: 0 0 4px 0;
+    -fx-border-radius: 12px;
+}
+
+.course-button:hover {
+    -fx-background-color: #42A5F5;
+}
+
+.course-button:pressed {
+    -fx-background-color: #1976D2;
+    -fx-border-width: 0 0 1px 0;
+    -fx-translate-y: 2px;
+}
+
+/* =========================================
+   РАЗДЕЛЫ КУРСА
+   ========================================= */
+
 .unit-pane {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 14px;
-    -fx-border-color: #E2E8F0;
-    -fx-border-radius: 14px;
-    -fx-border-width: 1px;
+    -fx-background-radius: 18px;
+
+    -fx-border-color: #D6EAFB;
+    -fx-border-radius: 18px;
+    -fx-border-width: 1px 1px 4px 1px;
+
     -fx-padding: 0;
 }
 
 .unit-pane > .title {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 14px;
-    -fx-padding: 15px;
+    -fx-background-radius: 18px;
+    -fx-padding: 17px;
+
     -fx-border-color: transparent;
 }
 
 .unit-pane:expanded > .title {
-    -fx-background-color: #EFF6FF;
-    -fx-background-radius: 14px 14px 0 0;
-    -fx-border-color: transparent transparent #DBEAFE transparent;
+    -fx-background-color: #E3F2FD;
+    -fx-background-radius: 18px 18px 0 0;
+
+    -fx-border-color: transparent transparent #BBDEFB transparent;
 }
 
 .unit-pane > .title > .text {
-    -fx-fill: #1E293B;
+    -fx-fill: #163779;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }
 
 /* Стрелка раздела */
+
 .unit-pane > .title > .arrow-button > .arrow {
-    -fx-background-color: #2563EB;
+    -fx-background-color: #2196F3;
 }
 
 /* Содержимое раздела */
+
 .unit-pane > .content {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 0 0 14px 14px;
+    -fx-background-radius: 0 0 18px 18px;
+
     -fx-border-color: transparent;
-    -fx-padding: 12px;
+    -fx-padding: 14px;
 }
 
-/* Строки уроков */
+/* =========================================
+   УРОКИ ВНУТРИ РАЗДЕЛОВ
+   ========================================= */
+
 .lesson-row {
-    -fx-background-color: #F8FAFC;
-    -fx-background-radius: 10px;
+    -fx-background-color: #F0F8FF;
+    -fx-background-radius: 13px;
+
     -fx-border-color: transparent;
-    -fx-border-radius: 10px;
-    -fx-padding: 13px;
+    -fx-border-radius: 13px;
+
+    -fx-padding: 14px;
     -fx-cursor: hand;
 }
 
 .lesson-row:hover {
-    -fx-background-color: #EFF6FF;
+    -fx-background-color: #E1F3FF;
+    -fx-border-color: #90CAF9;
 }
 
 /* Номер урока */
+
 .lesson-number {
+    -fx-background-color: #BBDEFB;
+    -fx-background-radius: 9px;
+
+    -fx-padding: 6px 10px;
+
     -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2563EB;
+    -fx-text-fill: #1565C0;
 }
 
 /* Название урока */
+
 .lesson-title {
     -fx-font-size: 14px;
-    -fx-text-fill: #334155;
+    -fx-font-weight: bold;
+    -fx-text-fill: #254775;
 }
 
 /* Количество уроков */
+
 .lesson-count {
     -fx-font-size: 12px;
-    -fx-text-fill: #64748B;
+    -fx-text-fill: #7893B0;
+}
+
+/* =========================================
+   ДОПОЛНИТЕЛЬНЫЕ АКЦЕНТЫ
+   ========================================= */
+
+/* Бирюзовый акцент */
+
+.accent-teal {
+    -fx-background-color: #E0F7FA;
+    -fx-text-fill: #00838F;
+}
+
+/* Голубой акцент */
+
+.accent-blue {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1976D2;
 }

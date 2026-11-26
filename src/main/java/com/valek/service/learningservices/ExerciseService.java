@@ -26,7 +26,7 @@ public class ExerciseService {
     @Transactional(readOnly = true)
     public List<ExerciseDto> getExercisesByLesson(Long lessonId) {
 
-        List<Exercise> exercises = exerciseRepository.findByLesson_IdOrderByPositionAsc(lessonId);
+        List<Exercise> exercises = exerciseRepository.findByLesson_IdAndIsActiveTrueOrderByPositionAsc(lessonId);
 
         return exercises.stream()
                 .map(exercise -> new ExerciseDto(

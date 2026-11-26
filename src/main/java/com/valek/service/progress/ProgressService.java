@@ -9,12 +9,11 @@ import com.valek.repository.attemptreps.LessonAttemptRepository;
 import com.valek.repository.attemptreps.UserLessonProgressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +72,15 @@ public class ProgressService {
         }
 
         return weeklyActivity;
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Long> getCompletedLessonIds(User user) {
+        return userLessonProgressRepository.findByUser_Id(user.getId())
+                .stream()
+                .filter(progress -> "COMPLETED".equals(progress.getStatus()))
+                .map(progress -> progress.getLesson().getId())
+                .collect(Collectors.toSet());
     }
 
     public long getCompletedLessons(User user) {

@@ -1,20 +1,21 @@
 
 package com.valek.controller;
 
+import com.valek.dto.learningdto.ExerciseCatalogDto;
 import com.valek.dto.learningdto.ExerciseDto;
 import com.valek.dto.progressdto.ProgressSummaryDto;
 import com.valek.model.User;
 import com.valek.model.attempts.LessonAttempt;
 import com.valek.model.learningmodels.Course;
-
 import com.valek.model.learningmodels.Lesson;
-
 import com.valek.service.learningservices.ExerciseService;
+import com.valek.service.learningservices.LessonService;
 import com.valek.service.progress.LessonProgressService;
 import com.valek.service.progress.ProgressService;
 import com.valek.view.dashboard.*;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,15 +36,23 @@ public class DashboardController {
     private final CourseDetailsView courseDetailsView;
     private final LessonView lessonView;
     private final ExerciseView exerciseView;
+    private final ExerciseCatalogView exerciseCatalogView;
+
     private final ExerciseService exerciseService;
-    private List<ExerciseDto> currentExercises;
-    private int currentExerciseIndex;
-    private Lesson currentLesson;
-    private Course currentCourse;
+    private final LessonService lessonService;
     private final LessonProgressService lessonProgressService;
-    private LessonAttempt currentLessonAttempt;
     private final ProgressService progressService;
     private final ProgressView progressView;
+
+    private List<ExerciseDto> currentExercises;
+    private int currentExerciseIndex;
+
+    private Lesson currentLesson;
+    private Course currentCourse;
+    private LessonAttempt currentLessonAttempt;
+
+    // true — урок запущен из вкладки «Упражнения»
+    private boolean practiceMode;
 
     @FXML
     private Button homeButton;
@@ -74,21 +84,22 @@ public class DashboardController {
     @FXML
     private void handleExercises() {
         setActiveButton(exercisesButton);
+        showExercises();
     }
 
     @FXML
     private void handleProgress() {
         setActiveButton(progressButton);
 
-        ProgressSummaryDto summary = progressService.getProgressSummary(user);
+        ProgressSummaryDto summary =
+                progressService.getProgressSummary(user);
 
-        VBox progressContent = progressView.create(summary);
-
-        contentBox.getChildren().setAll(progressContent);
+        contentBox.getChildren().setAll(
+                progressView.create(summary)
+        );
     }
 
     private void setActiveButton(Button button) {
-
         homeButton.getStyleClass().remove("active");
         learningButton.getStyleClass().remove("active");
         exercisesButton.getStyleClass().remove("active");
@@ -102,26 +113,95 @@ public class DashboardController {
         showHome();
     }
 
+    private void showHome() {
+        contentBox.getChildren().setAll(
+                homeView.create(
+                        user,
+                        progressService.getCompletedLessons(user)
+                )
+        );
+    }
+
     private void showLearning() {
         contentBox.getChildren().setAll(
                 courseCatalogView.create(this::showCourseDetails)
         );
     }
 
-    private void showHome() {
-        contentBox.getChildren().setAll(homeView.create(user, progressService.getCompletedLessons(user)));
+    private void showExercises() {
+        contentBox.getChildren().setAll(exerciseCatalogView.create(this::startPracticeLesson));
     }
 
     private void showCourseDetails(Course course) {
         currentCourse = course;
+        practiceMode = false;
 
-        contentBox.getChildren().setAll(courseDetailsView.create(course, this::showLearning, this::showLesson));
+        Set<Long> completedLessonIds = progressService.getCompletedLessonIds(user);
+
+        contentBox.getChildren().setAll(
+                courseDetailsView.create(
+                        course,
+                        completedLessonIds,
+                        this::showLearning,
+                        this::showLesson
+                )
+        );
+    }
+
+
+    private boolean isLessonUnlocked(Lesson targetLesson) {
+        Set<Long> completedLessonIds = progressService.getCompletedLessonIds(user);
+
+        return lessonService.isLessonUnlocked(targetLesson.getId(), completedLessonIds);
+    }
+
+
+    private void showLockedLessonMessage() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("Урок заблокирован");
+        alert.setHeaderText("Этот урок пока недоступен");
+
+        alert.setContentText(
+                "Чтобы открыть этот урок, сначала заверши предыдущий урок курса."
+        );
+
+        alert.showAndWait();
     }
 
     private void showLesson(Lesson lesson) {
-        currentLesson = lesson;
 
-        contentBox.getChildren().setAll(lessonView.create(lesson, () -> showCourseDetails(currentCourse), this::startLesson));
+        if (!isLessonUnlocked(lesson)) {
+            showLockedLessonMessage();
+            return;
+        }
+
+        currentLesson = lesson;
+        practiceMode = false;
+
+        contentBox.getChildren().setAll(
+                lessonView.create(
+                        lesson,
+                        () -> showCourseDetails(currentCourse),
+                        this::startLesson
+                )
+        );
+    }
+
+    // Запуск урока из каталога упражнений
+
+    private void startPracticeLesson(ExerciseCatalogDto selectedLesson) {
+
+        currentLesson = lessonService.getPublishedLessonById(
+                selectedLesson.lessonId()
+        );
+
+        currentCourse = null;
+
+        practiceMode = true;
+
+        startLesson();
     }
 
     private void showExercise() {
@@ -132,50 +212,83 @@ public class DashboardController {
 
         ExerciseDto exercise = currentExercises.get(currentExerciseIndex);
 
-        contentBox.getChildren().setAll(exerciseView.create(exercise, () -> showLesson(currentLesson),
-                answer -> {
-                    boolean correct = exerciseService.checkAnswer(exercise.id(), answer);
+        Runnable onBack = practiceMode
+                ? this::showExercises
+                : () -> showLesson(currentLesson);
 
-                    lessonProgressService.recordExerciseAttempt(
-                            currentLessonAttempt,
-                            exercise.id(),
-                            answer,
-                            correct
-                    );
+        contentBox.getChildren().setAll(
+                exerciseView.create(
+                        exercise,
+                        onBack,
+                        answer -> {
 
-                    return correct;
-                }, this::nextExercise));
+                            boolean correct = exerciseService.checkAnswer(
+                                    exercise.id(),
+                                    answer
+                            );
+
+                            lessonProgressService.recordExerciseAttempt(
+                                    currentLessonAttempt,
+                                    exercise.id(),
+                                    answer,
+                                    correct
+                            );
+
+                            return correct;
+                        },
+                        this::nextExercise
+                )
+        );
     }
 
+
     public void startLesson() {
+
+
+        if (!practiceMode && !isLessonUnlocked(currentLesson)) {
+            showLockedLessonMessage();
+            showCourseDetails(currentCourse);
+            return;
+        }
+
         currentExercises = exerciseService.getExercisesByLesson(currentLesson.getId());
 
         if (currentExercises.isEmpty()) {
+
+            if (practiceMode) {
+                showExercises();
+            }
+
             return;
         }
 
         currentExerciseIndex = 0;
 
-        currentLessonAttempt = lessonProgressService.startLessonAttempt(
-                user,
-                currentLesson,
-                currentExercises.size()
-        );
+        currentLessonAttempt = lessonProgressService.startLessonAttempt(user, currentLesson, currentExercises.size());
 
         showExercise();
     }
 
+
     private void nextExercise() {
+
         currentExerciseIndex++;
 
         if (currentExerciseIndex < currentExercises.size()) {
+
             showExercise();
+
         } else {
+
             lessonProgressService.completeLesson(currentLessonAttempt);
 
             currentLessonAttempt = null;
 
-            showCourseDetails(currentCourse);
+            if (practiceMode) {
+                showExercises();
+            } else {
+                showCourseDetails(currentCourse);
+            }
         }
     }
 }

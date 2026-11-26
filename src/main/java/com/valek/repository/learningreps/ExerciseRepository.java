@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
-    List<Exercise> findByLesson_IdOrderByPositionAsc(Long lessonId);
+    List<Exercise> findByLesson_IdAndIsActiveTrueOrderByPositionAsc(Long lessonId);
 }
