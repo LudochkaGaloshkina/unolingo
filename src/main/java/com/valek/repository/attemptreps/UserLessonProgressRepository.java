@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+//информация о завершённых уроках
 @Repository
-public interface UserLessonProgressRepository
-        extends JpaRepository<UserLessonProgress, Long> {
+public interface UserLessonProgressRepository extends JpaRepository<UserLessonProgress, Long> {
 
     Optional<UserLessonProgress> findByUser_IdAndLesson_Id(
             Long userId,
@@ -17,4 +18,6 @@ public interface UserLessonProgressRepository
     );
 
     List<UserLessonProgress> findByUser_Id(Long userId);
+
+    long countByUser_IdAndStatus(Long userId, String status);
 }

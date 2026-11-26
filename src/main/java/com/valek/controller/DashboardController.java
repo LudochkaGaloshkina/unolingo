@@ -2,6 +2,7 @@
 package com.valek.controller;
 
 import com.valek.dto.learningdto.ExerciseDto;
+import com.valek.dto.progressdto.ProgressSummaryDto;
 import com.valek.model.User;
 import com.valek.model.attempts.LessonAttempt;
 import com.valek.model.learningmodels.Course;
@@ -10,6 +11,7 @@ import com.valek.model.learningmodels.Lesson;
 
 import com.valek.service.learningservices.ExerciseService;
 import com.valek.service.progress.LessonProgressService;
+import com.valek.service.progress.ProgressService;
 import com.valek.view.dashboard.*;
 
 import javafx.fxml.FXML;
@@ -39,6 +41,8 @@ public class DashboardController {
     private Course currentCourse;
     private final LessonProgressService lessonProgressService;
     private LessonAttempt currentLessonAttempt;
+    private final ProgressService progressService;
+    private final ProgressView progressView;
 
     @FXML
     private Button homeButton;
@@ -75,6 +79,12 @@ public class DashboardController {
     @FXML
     private void handleProgress() {
         setActiveButton(progressButton);
+
+        ProgressSummaryDto summary = progressService.getProgressSummary(user);
+
+        VBox progressContent = progressView.create(summary);
+
+        contentBox.getChildren().setAll(progressContent);
     }
 
     private void setActiveButton(Button button) {
@@ -99,7 +109,7 @@ public class DashboardController {
     }
 
     private void showHome() {
-        contentBox.getChildren().setAll(homeView.create(user));
+        contentBox.getChildren().setAll(homeView.create(user, progressService.getCompletedLessons(user)));
     }
 
     private void showCourseDetails(Course course) {
